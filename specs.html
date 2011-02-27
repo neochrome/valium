@@ -1,0 +1,23 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+	<title>jQuery Valium Specs</title>
+	<link href="libs/jasmine.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div id="html-hook" style="display: none;"></div>
+	
+	<script src="libs/jquery-1.4.2.js" type="text/javascript"></script>
+	<script src="libs/jasmine.js" type="text/javascript"></script>
+	<script src="libs/jasmine-html.js" type="text/javascript"></script>
+
+	<script src="jquery.valium.js" type="text/javascript"></script>
+	<script src="jquery.valium.spec.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+		jasmine.getEnv().addReporter(new jasmine.TrivialReporter());
+		jasmine.getEnv().execute();
+	</script>
+</body>
+</html>
