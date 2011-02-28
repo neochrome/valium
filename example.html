@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+	<title>jQuery valium example</title>
+  <style type="text/css">
+    body, input, select, label {font-size: 12px; font-family:verdana;}
+    .hide{display: none;}
+    input, select { float: left; width: 100px; margin: 3px; }
+    label{ float:left; clear: both; width: 40px; margin-top: 6px;}
+    label.error, div.error, div.warning { float:left; clear: none; width:100px; margin-top: 3px;}
+    .error{ color: red; }
+    .warning {color: blue;}
+  </style>
+</head>
+<body>
+  <button id="check">check</button>
+  <form action="">
+      <label for="field1">field1</label>
+      <input id="field1" name="field1"/>
+      <div id="field1-required" class="hide error">come on, it's required</div>
+      <div id="field1-range" class="hide error">mind that range</div>
+      <div id="field1-warning" class="hide warning">close one!</div>
+      <label for="field2">field2</label>
+      <select id="field2" name="field2">
+          <option value=""></option>
+          <option value="1">one</option>
+          <option value="2">two</option>
+      </select>
+
+      <label for="min">min</label>
+      <input id="min" name="min"/>
+      <label for="max">max</label>
+      <input id="max" name="max"/>
+
+      <label for="tick">tick</label>
+      <input id="tick" name="tick" type="checkbox" value="something"/>
+
+      <label for="choice1">choice</label>
+      <input id="choice1" name="choice" type="radio" value="one"/>
+      <input id="choice2" name="choice" type="radio" value="two"/>
+  </form>
+
+  <script src="libs/jquery-1.4.2.js" type="text/javascript"></script>
+  <script src="jquery.valium.js" type="text/javascript"></script>
+
+  <script type="text/javascript">
+    $('form').valium({
+        field1 : {
+            required: {message: $('#field1-required')},
+            range: {message: $('#field1-range'), min:14, max:80}
+        },
+        field2 : {
+            required: {message: 'meh, select one!'}
+        },
+        min: {
+            required: {message: 'required'},
+            lesserThan:{message:'must be lesser', other:$('#max')}
+        },
+        max: {
+            required: {message: 'required'},
+            greaterThan:{message:'must be greater', other:$('#min')}
+        },
+        tick:{
+            required: {message: 'required'}
+        },
+        choice:{
+            required: {message: 'required'}
+        }
+    });
+
+    $('#field1').bind('blur', function(){
+        if($(this).valium('isValid') && $(this).val() < 20){
+            $('#field1-warning').show();
+        }
+        else
+        {
+            $('#field1-warning').hide();
+        }
+    });
+
+    $('#check').click(function(){
+        var message = "field1: " + $('#field1').valium('isValid');
+        message += "\nfield2: " + $('#field2').valium('isValid');
+        message += "\nmin: " + $('#min').valium('isValid');
+        message += "\nmax: " + $('#max').valium('isValid');
+        message += "\ntick: " + $('#tick').valium('isValid');
+        message += "\nchoice: " + $('input[name=choice]').valium('isValid');
+        message += "\nform: " + $('form').valium('isValid');
+        alert(message);
+    });
+  </script>
+</body>
+</html>
