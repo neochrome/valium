@@ -1,26 +1,41 @@
-describe("jQuery Valium", function () {
+describe('jQuery Valium', function () {
 
-	var form = {};
-
-	beforeEach(function () {
+	beforeEach(function (){
 		this.addMatchers({
 			toBeInstanceOf: function(klass){ return this.actual instanceof klass; }
 		});
-
-
-		$("#html-hook").empty();
-		$('<form id="validation"> \
-			<input name="min" id="min" type="text"/> \
-			<input name="max" id="max" type="text"/> \
-		</form>').appendTo("#html-hook");
-
-		form = $("#validation");
 	});
 
-	it("should support jQuery chaining", function () {
+	it('should support jQuery chaining', function () {
+		var form = build();
 		var returnValue = form.valium();
 
 		expect(returnValue).toBeInstanceOf(jQuery);
 	});
+
+	it('should validate empty forms', function(){
+		var form = build();
+		form.valium();
+
+		expect(form.valium('isValid')).toBe(true);
+	});
+
+
+	function build(fields){
+		var form = new Form();
+		(fields || function(){})(form);
+		$('#html-hook').empty();
+		form.html.appendTo($('#html-hook'));
+		return form.html;
+	};
+
+	var Form = function(){
+		this.html = $('<form id="form"></form>');
+	};
+	Form.prototype = {
+		text: function(name){
+			$('<input type="text" id="' + name + '" name="' + name + '" />').appendTo(this.html);
+		}
+	};
 
 });
