@@ -13,6 +13,9 @@ Form.prototype = {
 	text: function(name){
 		$('<input type="text" id="' + name + '" name="' + name + '" />').appendTo(this.html);
 	},
+	textArea: function(name){
+		$('<textarea id="' + name + '" name="' + name + '"></textarea').appendTo(this.html);
+	},
 	select: function(name, options){
 		var select = $('<select id="' + name + '" name="' + name + '"></select>');
 		$.each(options, function(value, text){

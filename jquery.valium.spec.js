@@ -71,6 +71,14 @@ describe('jQuery Valium', function () {
 		expect(form.find('#field').valium('isValid')).toBe(false);
 	});
 
+	it('should validate textareas', function(){
+		var form = build(function(form){
+			form.textArea('field');
+		});
+		form.valium({field:{required:{message:'required'}}});
+		expect(form.find('#field').valium('isValid')).toBe(false);
+	});
+	
 	it('should validate dropdowns', function(){
 		var form = build(function(form){
 			form.select('field', {'':'(choose)', key1:'value1', key2:'value2'});
