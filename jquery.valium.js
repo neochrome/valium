@@ -81,7 +81,7 @@
 					else if(input.is(':radio')) {
 						var form = input.parents('form');
 						var selectedInGroup = form.find(':input:radio[name=' + input.attr('name') + ']:checked');
-						value = selectedInGroup.val(); 
+						value = selectedInGroup.val() || '';
 					}
 					else { 
 						value = input.val(); 
