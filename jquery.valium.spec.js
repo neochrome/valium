@@ -121,8 +121,8 @@ describe('jQuery Valium', function () {
 				form.message('field-required', 'this field is required');
 			});
 			form.valium({field:{required:{message:$('#field-required')}}});
-			field = form.find('#field');
-			fieldMessage= form.find('#field-required');
+			field = $('#field');
+			fieldMessage = $('#field-required');
 		});
 
 		it('should set error class on invalid fields', function(){
@@ -137,8 +137,13 @@ describe('jQuery Valium', function () {
 			expect(field.hasClass('error')).toBe(false);
 		});
 
+		it('should support jquery messages', function(){
+			expect(fieldMessage.css('display')).toEqual('none');
+			field.change();
+			expect(fieldMessage.css('display')).toNotEqual('none');
+		});
+		
 		xit('should create labels for string messages', function(){});
-		xit('should show jquery message for invalid field', function(){});
 		xit('should trigger validation on change', function(){});
 		xit('should hide messages for valid fields', function(){});
 		xit('should use hide/show function of message if present', function(){});
