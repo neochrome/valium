@@ -106,6 +106,7 @@
 
 	function hideMessage(message, rule){
 		(message instanceof jQuery ? message : findMessageFor(this, rule)).hide();
+		this.removeClass('error');
 	}
 
 	function showMessage(messageOrText, rule){
@@ -116,6 +117,7 @@
 		else{
 			$('<label for="' + this.attr('id') + '" class="error ' + rule + '">' + messageOrText + '</label>').insertAfter(this);
 		}
+		this.addClass('error');
 	}
 
 	function findRule(name){
