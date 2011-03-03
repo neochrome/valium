@@ -6,7 +6,7 @@ describe('jQuery Valium', function () {
 		});
 	});
 
-	it('should support jQuery chaining', function () {
+	it('should support jQuery chaining when initializing', function () {
 		var form = build();
 		var returnValue = form.valium();
 
@@ -14,15 +14,15 @@ describe('jQuery Valium', function () {
 	});
 
 	
-	describe('form validation', function(){
-		it('should validate when empty', function(){
+	describe('when querying form validity', function(){
+		it('should be valid when empty', function(){
 			var form = build();
 			form.valium();
 
 			expect(form.valium('isValid')).toBe(true);
 		});
 
-		it('should validate when no rules are specified', function(){
+		it('should be valid when no rules are specified', function(){
 			var form = build(function(form){
 				form.text('field1');
 			});
@@ -44,7 +44,7 @@ describe('jQuery Valium', function () {
 			expect(form.valium('isValid')).toBe(false);
 		});
 		
-		it('should validate when all fields are valid', function(){
+		it('should be valid when all fields are valid', function(){
 			var form = build(function(form){
 				form.text('field1');
 				form.text('field2');
@@ -67,7 +67,7 @@ describe('jQuery Valium', function () {
 	});
 
 	
-	describe('input field validation', function(){
+	describe('should support validation on', function(){
 		it('textboxes', function(){
 			var form = build(function(form){
 				form.text('field');
@@ -137,8 +137,8 @@ describe('jQuery Valium', function () {
 			expect(field.hasClass('error')).toBe(false);
 		});
 
-		xit('should show jquery message for invalid field', function(){});
 		xit('should create labels for string messages', function(){});
+		xit('should show jquery message for invalid field', function(){});
 		xit('should trigger validation on change', function(){});
 		xit('should hide messages for valid fields', function(){});
 		xit('should use hide/show function of message if present', function(){});
