@@ -32,5 +32,8 @@ Form.prototype = {
 			form.append($('<input type="radio" id="' + name + '-' + value + '" name="' + name +'" value="' + value + '"/>'));
 			form.append($('<label for="' + name + '-' + value + '">' + text + '</label>'));
 		});
+	},
+	message: function(id, text){
+		$('<div id="' + id + '" style="display: none;">' + text + '</div>').appendTo(this.html);
 	}
 };
