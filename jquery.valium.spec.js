@@ -2,7 +2,9 @@ describe('jQuery Valium', function () {
 
 	beforeEach(function (){
 		this.addMatchers({
-			toBeInstanceOf: function(klass){ return this.actual instanceof klass; }
+			toBeInstanceOf: function(klass){ return this.actual instanceof klass; },
+			toBeVisible: function(){ return this.actual.css('display') !== 'none'; },
+			toBeHidden: function(){ return this.actual.css('display') === 'none'; }
 		});
 	});
 
@@ -137,15 +139,36 @@ describe('jQuery Valium', function () {
 			expect(field.hasClass('error')).toBe(false);
 		});
 
-		it('should support jquery messages', function(){
-			expect(fieldMessage.css('display')).toEqual('none');
+		it('should show jquery messages for invalid fields', function(){
+			expect(fieldMessage).toBeHidden();
 			field.change();
-			expect(fieldMessage.css('display')).toNotEqual('none');
+			expect(fieldMessage).toBeVisible();
 		});
 		
-		xit('should create labels for string messages', function(){});
+		it('should hide jquery messages for valid fields', function(){
+			field.change();
+			field.val('something');
+			field.change();
+			expect(fieldMessage).toBeHidden();
+		});
+		
+		it('should create and show labels for string messages on invalid field', function(){
+			form.valium({field:{required:{message:'string-required'}}});
+			field.change();
+			fieldMessage = form.find('label.error.required[for=field]');
+			expect(fieldMessage).toBeVisible();
+		});
+		
+		it('should hide created labels for string messages on valid field', function(){
+			form.valium({field:{required:{message:'string-required'}}});
+			field.change();
+			fieldMessage = form.find('label.error.required[for=field]');
+			field.val('something');
+			field.change();
+			expect(fieldMessage).toBeHidden();
+		});
+		
 		xit('should trigger validation on change', function(){});
-		xit('should hide messages for valid fields', function(){});
 		xit('should use hide/show function of message if present', function(){});
 	});
 
