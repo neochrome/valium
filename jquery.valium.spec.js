@@ -168,8 +168,18 @@ describe('jQuery Valium', function () {
 			expect(fieldMessage).toBeHidden();
 		});
 		
+		it('should support hide/show functions for message if present', function(){
+			var show = jasmine.createSpy();
+			var hide = jasmine.createSpy();
+			form.valium({field:{required:{message:{show:show,hide:hide}}}});
+			field.change();
+			expect(show).toHaveBeenCalledWith('required');
+			field.val('something');
+			field.change();
+			expect(hide).toHaveBeenCalledWith('required');
+		});
+
 		xit('should trigger validation on change', function(){});
-		xit('should use hide/show function of message if present', function(){});
 	});
 
 });

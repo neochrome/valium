@@ -31,7 +31,7 @@
 				// also verify that rule name exists
 				$.each(rules, function(ruleName, params){
 					if(findRule(ruleName) === undefined){
-						throw 'undefined validation rule: ' + ruleName;
+						throw 'Undefined validation rule: ' + ruleName;
 					}
 					if(!(params.other instanceof jQuery)){
 						return;
@@ -103,19 +103,42 @@
 	function findMessageFor(input, rule){
 		return $('label[for=' + input.attr('id') + '][class~=error][class~=' + rule + ']');
 	}
-
-	function hideMessage(message, rule){
-		(message instanceof jQuery ? message : findMessageFor(this, rule)).hide();
+	
+	function hideMessage(option, rule){
+		if(option instanceof jQuery){
+			option.hide();
+		}
+		else if(typeof option.hide === 'function'){
+			option.hide(rule);
+		}
+		else if(typeof option === 'string'){
+			findMessageFor(this, rule).hide();
+		}
+		else{
+			throw 'Unsupported message option supplied for ' + rule + ' on ' + this.attr('id');
+		}
 		this.removeClass('error');
 	}
 
-	function showMessage(messageOrText, rule){
-		var message = messageOrText instanceof jQuery ? messageOrText : findMessageFor(this, rule);
-		if(message.length){
-			message.show();
+	function showMessage(option, rule){
+		if(option instanceof jQuery){
+			option.show();
+		}
+		else if(typeof option.show === 'function'){
+			option.show(rule);
+		}
+		else if(typeof option === 'string'){
+			var messageText = option;
+			var message = findMessageFor(this, rule);
+			if(message.length){
+				message.show();
+			}
+			else{
+				$('<label for="' + this.attr('id') + '" class="error ' + rule + '">' + messageText + '</label>').insertAfter(this);
+			}
 		}
 		else{
-			$('<label for="' + this.attr('id') + '" class="error ' + rule + '">' + messageOrText + '</label>').insertAfter(this);
+			throw 'Unsupported message option supplied for ' + rule + ' on ' + this.attr('id');
 		}
 		this.addClass('error');
 	}
