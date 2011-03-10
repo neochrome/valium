@@ -101,7 +101,7 @@
 	};
 
 	function findMessageFor(input, rule){
-		return $('label[for=' + input.attr('id') + '][class~=error][class~=' + rule + ']');
+		return $('label[for=' + input.attr('id') + '][class~=invalid][class~=' + rule + ']');
 	}
 	
 	function hideMessage(option, rule){
@@ -117,7 +117,8 @@
 		else{
 			throw 'Unsupported message option supplied for ' + rule + ' on ' + this.attr('id');
 		}
-		this.removeClass('error');
+		this.removeClass('invalid');
+		this.addClass('valid');
 	}
 
 	function showMessage(option, rule){
@@ -134,13 +135,14 @@
 				message.show();
 			}
 			else{
-				$('<label for="' + this.attr('id') + '" class="error ' + rule + '">' + messageText + '</label>').insertAfter(this);
+				$('<label for="' + this.attr('id') + '" class="invalid ' + rule + '">' + messageText + '</label>').insertAfter(this);
 			}
 		}
 		else{
 			throw 'Unsupported message option supplied for ' + rule + ' on ' + this.attr('id');
 		}
-		this.addClass('error');
+		this.addClass('invalid');
+		this.removeClass('valid');
 	}
 
 	function findRule(name){

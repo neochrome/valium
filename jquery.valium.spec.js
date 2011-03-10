@@ -127,18 +127,30 @@ describe('jQuery Valium', function () {
 			fieldMessage = $('#field-required');
 		});
 
-		it('should set error class on invalid fields', function(){
+		it('should set invalid class on invalid fields', function(){
 			field.change();
-			expect(field.hasClass('error')).toBe(true);
+			expect(field.hasClass('invalid')).toBe(true);
 		});
 		
-		it('should remove error class on valid fields', function(){
+		it('should remove invalid class on valid fields', function(){
 			field.change();
 			field.val('something');
 			field.change();
-			expect(field.hasClass('error')).toBe(false);
+			expect(field.hasClass('invalid')).toBe(false);
 		});
 
+		it('should remove valid class on invalid fields', function(){
+			field.change();
+			expect(field.hasClass('valid')).toBe(false);
+		});
+		
+		it('should set valid class on valid fields', function(){
+			field.change();
+			field.val('something');
+			field.change();
+			expect(field.hasClass('valid')).toBe(true);
+		});
+		
 		it('should show jquery messages for invalid fields', function(){
 			expect(fieldMessage).toBeHidden();
 			field.change();
@@ -155,14 +167,14 @@ describe('jQuery Valium', function () {
 		it('should create and show labels for string messages on invalid field', function(){
 			form.valium({field:{required:{message:'string-required'}}});
 			field.change();
-			fieldMessage = form.find('label.error.required[for=field]');
+			fieldMessage = form.find('label.invalid.required[for=field]');
 			expect(fieldMessage).toBeVisible();
 		});
 		
 		it('should hide created labels for string messages on valid field', function(){
 			form.valium({field:{required:{message:'string-required'}}});
 			field.change();
-			fieldMessage = form.find('label.error.required[for=field]');
+			fieldMessage = form.find('label.invalid.required[for=field]');
 			field.val('something');
 			field.change();
 			expect(fieldMessage).toBeHidden();
